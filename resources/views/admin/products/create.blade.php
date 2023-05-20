@@ -1,10 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Create Product</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Create Product</h1>
+    </div>
 
     <div class="py-3">
-        <form action="" method="post">
+        <form action="{{ url('/dashboard/products/store') }}" method="post">
             @csrf
             <div class="input-group mb-3">
                 <span class="input-group-text" id="addon-wrapping">Name</span>
@@ -13,10 +15,10 @@
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="addon-wrapping">Category</span>
-                <select name="category" class="form-select">
-                    <option value="1">Cloths</option>
-                    <option value="2">Shoes</option>
-                    <option value="3">Accessories</option>
+                <select name="category_id" class="form-select">
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
                 </select>
             </div>
 

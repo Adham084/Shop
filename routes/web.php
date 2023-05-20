@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +20,21 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('layouts.admin');
+    return view('admin.dashboard');
 });
 
-Route::get('/dashboard/products', function () {
-    return view('admin.products.index');
-});
+// Products
+Route::get('/dashboard/products', [ProductController::class, 'index']);
+Route::get('/dashboard/products/create', [ProductController::class, 'create']);
+Route::post('/dashboard/products/store', [ProductController::class, 'store']);
+Route::get('/dashboard/products/edit/{id}', [ProductController::class, 'edit']);
+Route::patch('/dashboard/products/update/{id}', [ProductController::class, 'update']);
+Route::delete('/dashboard/products/delete/{id}', [ProductController::class, 'destroy']);
 
-Route::get('/dashboard/products/create', function () {
-    return view('admin.products.create');
-});
+// Categories
+Route::get('/dashboard/categories', [CategoryController::class, 'index']);
+Route::get('/dashboard/categories/create', [CategoryController::class, 'create']);
+Route::post('/dashboard/categories/store', [CategoryController::class, 'store']);
+Route::get('/dashboard/categories/edit/{id}', [CategoryController::class, 'edit']);
+Route::patch('/dashboard/categories/update/{id}', [CategoryController::class, 'update']);
+Route::delete('/dashboard/categories/delete/{id}', [CategoryController::class, 'destroy']);
