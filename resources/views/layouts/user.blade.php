@@ -9,9 +9,14 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.111.3">
-    <title>Carousel Template · Bootstrap v5.3</title>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Home · Shop</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    @yield('css')
 
     <style>
         .bd-placeholder-img {
@@ -90,6 +95,8 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
+
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
@@ -165,27 +172,54 @@
     <header data-bs-theme="dark">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Carousel</a>
+                <a class="navbar-brand" href="{{ route('home') }}">Shop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" href="{{ route('home') }}">Home</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="#">Link</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled">Disabled</a>
+                        </li> --}}
+                        <li class="nav-item">
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        @guest
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="mx-2 btn btn-outline-secondary">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('register') }}" class="btn btn-outline-primary">Signup</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" role="button" v-pre>
+                                    Welcome, {{ Auth::user()->name }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <input class="btn btn-outline-danger" type="submit" value="Logout">
+                                </form>
+                            </li>
+                        @endguest
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -194,6 +228,8 @@
     <main>
         @yield('content')
     </main>
+
+    <hr class="featurette-divider">
 
     <!-- FOOTER -->
     <footer class="container">

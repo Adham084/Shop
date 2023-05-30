@@ -34,6 +34,11 @@
             </div>
 
             <div class="input-group mb-3">
+                <span class="input-group-text">Image</span>
+                <input name="image" type="text" class="form-control">
+            </div>
+
+            <div class="input-group mb-3">
                 <span class="input-group-text">Description</span>
                 <textarea name="description" class="form-control"></textarea>
             </div>

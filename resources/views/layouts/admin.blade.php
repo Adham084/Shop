@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.111.3">
-    <title>Dashboard</title>
+    <title>Dashboard · Shop</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -162,7 +162,7 @@
     </div>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">Company name</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/">Shop</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -172,7 +172,10 @@
             aria-label="Search">
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="#">Sign out</a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <input class="nav-link px-3" type="submit" value="Logout">
+                </form>
             </div>
         </div>
     </header>
@@ -188,12 +191,12 @@
                                 Dashboard
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="#">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/dashboard/orders') }}">
                                 <span data-feather="file" class="align-text-bottom"></span>
                                 Orders
                             </a>
-                        </li> --}}
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/dashboard/products') }}">
                                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
@@ -207,13 +210,14 @@
                                 Categories
                             </a>
                         </li>
-
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="#">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/dashboard/users') }}">
                                 <span data-feather="users" class="align-text-bottom"></span>
-                                Customers
+                                Users
                             </a>
                         </li>
+
+                        {{--
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <span data-feather="bar-chart-2" class="align-text-bottom"></span>

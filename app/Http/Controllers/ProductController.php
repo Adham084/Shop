@@ -8,15 +8,22 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $products = Product::all();
+
         return view('admin.products.index', compact('products'));
     }
 
     public function create()
     {
         $categories = Category::all();
+
         return view('admin.products.create', compact('categories'));
     }
 
@@ -24,7 +31,15 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::all();
+
         return view('admin.products.edit', compact('product', 'categories'));
+    }
+
+    public function details($id)
+    {
+        $product = Product::find($id);
+
+        return view('home.product', compact('product'));
     }
 
     //
@@ -32,14 +47,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product;
-
         $product->name = $request->name;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
         $product->description = $request->description;
-        $product->image = "te";
-
+        $product->image = $request->image;
         $product->save();
 
         return redirect('dashboard/products');
@@ -48,14 +61,12 @@ class ProductController extends Controller
     public function update($id, Request $request)
     {
         $product = Product::find($id);
-
         $product->name = $request->name;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
         $product->description = $request->description;
-        $product->image = "te";
-
+        $product->image = $request->image;
         $product->save();
 
         return redirect('dashboard/products');
@@ -64,6 +75,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         Product::find($id)->delete();
+
         return redirect()->back();
     }
 }

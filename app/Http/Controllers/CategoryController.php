@@ -7,9 +7,15 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'admin']);
+    }
+
     public function index()
     {
         $categories = Category::all();
+
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -21,6 +27,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
+
         return view('admin.categories.edit', compact('category'));
     }
 
@@ -29,9 +36,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $category = new Category;
-
         $category->name = $request->name;
-
         $category->save();
 
         return redirect('dashboard/categories');
@@ -40,9 +45,7 @@ class CategoryController extends Controller
     public function update($id, Request $request)
     {
         $category = Category::find($id);
-
         $category->name = $request->name;
-
         $category->save();
 
         return redirect('dashboard/categories');
@@ -51,6 +54,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::find($id)->delete();
+
         return redirect()->back();
     }
 }
